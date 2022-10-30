@@ -1,8 +1,8 @@
 function out=polyphase_tx(sig_in, H0, H1)
-% input: Nx1 complex array - signal to filter
+% sig_in: Nx1 complex array - signal to filter
 % h0, h1: Mx2 real arrays (M=order, Hi(1)=numerator, Hi(2)=denominator) - analysis filters
-out_0=filter(H0(1,:),H0(2,:),input);
-out_1=filter(H1(1,:),H1(2,:),input);
+out_0=filter(H0(1,:),H0(2,:),sig_in);
+out_1=filter(H1(1,:),H1(2,:),sig_in);
 out_0=downsample(out_0,2);
 v3=downsample(out_1,2);
 out_00=filter(H0(1,:),H0(2,:),out_0);

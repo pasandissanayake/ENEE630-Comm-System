@@ -13,16 +13,21 @@ for burst_no = 1:n
     % random input - x
     x = rand(1,sig_len,"like",1i)*50;
 
+    % sinusoid test function
+    %{ 
     T =1; w = pi/100;
     t =[1:T:sig_len];
-    %x =cos(w*t/T) + 1.5*cos(3*w*t/T);
+    x =cos(w*t/T) + 1.5*cos(3*w*t/T);
+    %}
 
     % synthesized signal - x_h
-
     [x, x_h] = polyphase_comb(x); % NEED TO GET THIS FROM A FUNCTION
     
+    % plot test functions
+    %{
     t=1:length(x);
     plot(t,x,'r--',t,x_h,'g--');
+    %}
 
     x_abs_diff_2= abs(x-x_h).^2;
     x_2 = abs(x).^2;
