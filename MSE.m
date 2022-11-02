@@ -14,19 +14,21 @@ for burst_no = 1:n
     x = rand(1,sig_len,"like",1i)*50;
 
     % sinusoid test function
-    %{ 
+    %
     T =1; w = pi/100;
-    t =[1:T:sig_len];
-    x =cos(w*t/T) + 1.5*cos(3*w*t/T);
+    t =1:T:sig_len;
+    x =1*cos(w*t/T) + 1.5*cos(50*w*t/T);
     %}
 
     % synthesized signal - x_h
-    [x, x_h] = polyphase_comb(x); % NEED TO GET THIS FROM A FUNCTION
+    % [x, x_h] = polyphase_comb(x); % NEED TO GET THIS FROM A FUNCTION
+    [x, x_h] = onestagepp_comb(x);
     
     % plot test functions
     %{
     t=1:length(x);
     plot(t,x,'r--',t,x_h,'g--');
+    legend('original','filtered');
     %}
 
     x_abs_diff_2= abs(x-x_h).^2;
