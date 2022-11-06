@@ -1,6 +1,5 @@
-function out = MSE(n, sig_len)
-% output: Mean square error (MSE) averaged over 'n' bursts (each of size
-% sig_len)
+function out = MSE(n, sig_len, synthesis_fun, input_type)
+% output: Mean square error (MSE) averaged over 'n' bursts (each of size sig_len)
 % inputs: 
 %   n       - number of bursts
 %   sig_len - size of each burst
@@ -10,19 +9,18 @@ function out = MSE(n, sig_len)
 MSE_burst_sum = 0;
 
 for burst_no = 1:n
-    % random input - x
-    x = rand(1,sig_len,"like",1i)*50;
-
-    % sinusoid test function
-    %
-    T =1; w = pi/100;
-    t =1:T:sig_len;
-    x =1*cos(w*t/T) + 1.5*cos(50*w*t/T);
-    %}
+    if (input_type == 1)
+        % sinusoid input
+        T =1; w = pi/100;
+        t =1:T:sig_len;
+        x =1*cos(w*t/T) + 1.5*cos(50*w*t/T);
+    else
+        % random input
+        x = rand(1,sig_len,"like",1i)*50;
+    end
 
     % synthesized signal - x_h
-    % [x, x_h] = polyphase_comb(x); % NEED TO GET THIS FROM A FUNCTION
-    [x, x_h] = onestagepp_comb(x);
+    [x, x_h] = synthesis_fun(x);
     
     % plot test functions
     %{
