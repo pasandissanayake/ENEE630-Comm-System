@@ -1,4 +1,4 @@
-function out = MSE(n, sig_len, synthesis_fun, input_type)
+function out = MSE(n, sig_len, synthesis_fun, input_type, show_plot)
 % output: Mean square error (MSE) averaged over 'n' bursts (each of size sig_len)
 % inputs: 
 %   n       - number of bursts
@@ -16,7 +16,7 @@ for burst_no = 1:n
         x =1*cos(w*t/T) + 1.5*cos(50*w*t/T);
     else
         % random input
-        x = rand(1,sig_len,"like",1i)*50;
+        x = randn(1,sig_len,"like",1i)*50;
     end
 
     % synthesized signal - x_h
@@ -32,6 +32,12 @@ for burst_no = 1:n
     x_abs_diff_2= abs(x-x_h).^2;
     x_2 = abs(x).^2;
     MSE_burst_sum = MSE_burst_sum + sqrt(sum(x_abs_diff_2./x_2)/length(x));
+end
+
+if (show_plot > 0)
+    t=1:length(x);
+    plot(t,x,'r-+',t,x_h,'g--');
+    legend('original','filtered');
 end
 
 out = MSE_burst_sum/n;
