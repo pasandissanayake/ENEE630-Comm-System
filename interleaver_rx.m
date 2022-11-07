@@ -1,4 +1,4 @@
-function out=DeInterleaver_rx(sig_in)
+function out=interleaver_rx(sig_in)
 deinterleaver_order=[1,4,2,4,3,4,3,4];
 
 

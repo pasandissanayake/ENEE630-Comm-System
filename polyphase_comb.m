@@ -6,7 +6,7 @@ H1 = H0; H1(1,16) = -1024;
 F0 = H0;
 F1 = H1; % F1(1,:) = -F1(1,:);
 
-fprintf("polyphase MSE: %f\n",MSE(10000,1024,@polyphase,0,1));
+fprintf("polyphase MSE: %f\n",MSE(10000,1024,@polyphase,1,0));
 
 function [in_sig, out_sig] = polyphase(x)
     global H0 H1 F0 F1

@@ -1,4 +1,4 @@
-function out=Interleaver_tx(sig_in)
+function out=interleaver_tx(sig_in)
 interleaver_order=[1,4,2,4,3,4,3,4];
 
 V0_size=sig_in(1,1);
