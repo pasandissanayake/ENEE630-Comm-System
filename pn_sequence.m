@@ -54,7 +54,7 @@ for i = 1:frame_size
     re_key = [re_key(2:end) re_pn_bit];
     
     % imag pn sequence
-    im_pn_bit = xor(xor(xor(xor(im_key(26-24),im_key(26-3)),im_key(26-2)),im_key(26-1)),im_key(26-0));
+    im_pn_bit = xor(xor(xor(xor(im_key(26-25),im_key(26-3)),im_key(26-2)),im_key(26-1)),im_key(26-0));
     out_pn_im(frame_size-(i-1)) = 1 - 2*(im_pn_bit);
     im_key = [im_key(2:end) im_pn_bit];
 end
