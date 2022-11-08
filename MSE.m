@@ -16,7 +16,7 @@ for burst_no = 1:n
         x =1*cos(w*t/T) + 1.5*cos(50*w*t/T);
     else
         % random input
-        x = randn(1,sig_len,"like",1i)*50;
+        x = randn(1,sig_len,"like",1i);
     end
 
     % synthesized signal - x_h
