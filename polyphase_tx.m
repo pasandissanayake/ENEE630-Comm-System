@@ -3,22 +3,15 @@ function out=polyphase_tx(sig_in, H0, H1)
 % h0, h1: Mx2 real arrays (M=order, Hi(1)=numerator, Hi(2)=denominator) - analysis filters
 
     % level 0
-    out_00=filter(H0(1,:),H0(2,:),sig_in);
-    out_00=downsample(out_00,2);
-    out_01=filter(H1(1,:),H1(2,:),sig_in);
-    v3=downsample(out_01,2);
+    out_00=onestagepp_tx(sig_in,H0,H1);
+    v3=out_00(2,:);
 
-    % level 1
-    out_10=filter(H0(1,:),H0(2,:),out_00);
-    out_10=downsample(out_10,2);
-    out_11=filter(H1(1,:),H1(2,:),out_00);
-    v2=downsample(out_11,2);
+    out_10=onestagepp_tx(out_00(1,:),H0,H1);
+    v2=out_10(2,:);
 
-    % level 2
-    out_20=filter(H0(1,:),H0(2,:),out_10);
-    v0=downsample(out_20,2);
-    out_21=filter(H1(1,:),H1(2,:),out_10);
-    v1=downsample(out_21,2);
+    out_20=onestagepp_tx(out_10(1,:),H0,H1);
+    v1=out_20(2,:);
+    v0=out_20(1,:);
     
     % fprintf("output signal sizes: %d %d %d %d\n",length(v0),length(v1),length(v2),length(v3));
 
