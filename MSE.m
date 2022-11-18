@@ -28,14 +28,16 @@ for burst_no = 1:n
     x_abs_diff_2 = abs(x-x_h).^2;
     x_2 = abs(x).^2;
 
-    x_2((x_2 < 1e-3)) = 1e-3;
-    x_abs_diff_2((x_abs_diff_2 < 1e-3)) = 0;
+    idx=(x_2 < 1e-5);
+    x_2(idx) = 1e-5;
+    x_abs_diff_2(idx) = 0;
     
-    MSE_burst_sum = MSE_burst_sum + (sum(x_abs_diff_2./x_2)/length(x));
+    MSE_burst_sum = MSE_burst_sum + (sum(x_abs_diff_2./x_2)/(length(x)-sum(idx)));
 end
 
 out = MSE_burst_sum/n;
 fprintf("x: %d, value: %d\n",x_2(50), x_abs_diff_2(50));
+fprintf('sum idx: %f\n', sum(idx));
 if (show_plot > 0)
     figure;
     t=1:length(x);
