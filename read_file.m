@@ -1,15 +1,22 @@
-function [id_sig, data] = read_file(path)
+function [id_sig, data] = read_file(path,block_num,data_only)
     ID_SIG_LEN = 128; DATA_LEN = 1024;
+    
+    if data_only > 0
+        block_len = DATA_LEN + 2; % +2 is due to the two emplty lines at the end of each block
+    else
+        block_len = ID_SIG_LEN + DATA_LEN + 2;
+    end
 
-    m = readmatrix(path);
-    L = length(m(:,1));
-    n_frames = L / (ID_SIG_LEN + DATA_LEN);
-
-    id_sig = [];
-    data = [];
-
-    for j=1:n_frames
-        id_sig = [id_sig m(1152*(j-1)+1:1152*(j-1)+128,1) + 1i*m(1152*(j-1)+1:1152*(j-1)+128,2)];
-        data = [data m(1152*(j-1)+129:1152*j,1) + 1i*m(1152*(j-1)+129:1152*j,2)];
+    opts = detectImportOptions(path);
+    opts.DataLines = [block_len*(block_num-1)+1 block_len*block_num-2];
+    
+    m = readmatrix(path,opts);
+    
+    if data_only > 0
+        id_sig = [];
+        data = m(1:DATA_LEN,1) + 1i*m(1:DATA_LEN,2);
+    else
+        id_sig = m(1:ID_SIG_LEN,1) + 1i*m(1:ID_SIG_LEN,2);
+        data = m(ID_SIG_LEN+1:ID_SIG_LEN+DATA_LEN,1) + 1i*m(ID_SIG_LEN+1:ID_SIG_LEN+DATA_LEN,2);
     end
 end
