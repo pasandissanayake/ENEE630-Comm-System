@@ -1,4 +1,4 @@
-function out = MSE(n, sig_len, synthesis_fun, input_type, show_plot)
+function out = MSE(synthesis_fun,in_sig,show_plot,n,sig_len)
 % output: Mean square error (MSE) averaged over 'n' bursts (each of size sig_len)
 % inputs: 
 %   n       - number of bursts
@@ -8,34 +8,38 @@ function out = MSE(n, sig_len, synthesis_fun, input_type, show_plot)
 
 MSE_burst_sum = 0;
 
+if ~isscalar(in_sig)
+    n = 1;
+end
+
 for burst_no = 1:n
-    if (input_type == 1)
+    if (isscalar(in_sig) && in_sig == 1)
         % sinusoid input
         T =1; w = pi/100;
         t =1:T:sig_len;
         x =1*cos(w*t/T) + 0*1.5*cos(10*w*t/T);
-    else
+    elseif isscalar(in_sig)
         % random input
         x = randn(1,sig_len,"like",1i);
+    else
+        x = in_sig;
     end
 
     % synthesized signal - x_h
     [x, x_h] = synthesis_fun(x);
     
-    % x = x(100:end-100);
-    % x_h = x_h(100:end-100);
     % MSE calculation
     x_abs_diff_2 = abs(x-x_h).^2;
     x_2 = abs(x).^2;
 
-    x_2((x_2 < 1e-3)) = 1e-3;
-    x_abs_diff_2((x_abs_diff_2 < 1e-3)) = 0;
+    idx=(x_2 < 1e-5);
+    x_2(idx) = 1e-5;
+    x_abs_diff_2(idx) = 0;
     
-    MSE_burst_sum = MSE_burst_sum + (sum(x_abs_diff_2./x_2)/length(x));
+    MSE_burst_sum = MSE_burst_sum + (sum(x_abs_diff_2./x_2)/(length(x)-sum(idx)));
 end
-
 out = MSE_burst_sum/n;
-fprintf("x: %d, value: %d\n",x_2(50), x_abs_diff_2(50));
+
 if (show_plot > 0)
     figure;
     t=1:length(x);
