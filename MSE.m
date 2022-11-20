@@ -26,7 +26,10 @@ for burst_no = 1:n
     end
 
     % synthesized signal - x_h
-    [x, x_h] = synthesis_fun(x);
+    if isa(synthesis_fun,'function_handle')
+        [x, x_h] = synthesis_fun(x);
+    else
+        x_h = synthesis_fun;
     
     % MSE calculation
     x_abs_diff_2 = abs(x-x_h).^2;
