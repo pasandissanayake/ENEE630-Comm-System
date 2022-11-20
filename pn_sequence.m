@@ -5,7 +5,7 @@ function [out_pn_re, out_pn_im] = pn_sequence(channel, group_id, frame_no)
 %       frame_no (int)              - current frame number to generate the key
 
 %% Generating personal key
-key = zeros(1,25);
+key = zeros(1,26);
 
 % convert frame_no to binary logical array
 frame_no = dec2bin(frame_no);
@@ -49,13 +49,13 @@ out_pn_im = zeros(1,512);
 %% Generating PN sequences
 for i = 1:frame_size
     % real pn sequence
-    re_pn_bit = xor(xor(re_key(25-24),re_key(25-3)),re_key(25-0));
-    out_pn_re(frame_size-(i-1)) = 1 - 2*(re_pn_bit);
+    re_pn_bit = xor(xor(re_key(26-25),re_key(26-3)),re_key(26-0));
+    out_pn_re(i) = 1 - 2*(re_pn_bit);
     re_key = [re_key(2:end) re_pn_bit];
     
     % imag pn sequence
-    im_pn_bit = xor(xor(xor(xor(im_key(25-24),im_key(25-3)),im_key(25-2)),im_key(25-1)),im_key(25-0));
-    out_pn_im(frame_size-(i-1)) = 1 - 2*(im_pn_bit);
+    im_pn_bit = xor(xor(xor(xor(im_key(26-25),im_key(26-3)),im_key(26-2)),im_key(26-1)),im_key(26-0));
+    out_pn_im(i) = 1 - 2*(im_pn_bit);
     im_key = [im_key(2:end) im_pn_bit];
 end
 

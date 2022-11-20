@@ -7,7 +7,7 @@ function out = scrambler(sig_in,group_id,frame_no)
 [v0_pn_re , v0_pn_im] = pn_sequence(0,group_id,frame_no);
 [v1_pn_re , v1_pn_im] = pn_sequence(1,group_id,frame_no);
 [v2_pn_re , v2_pn_im] = pn_sequence(2,group_id,frame_no);
-[v3_pn_re , v3_pn_im]= pn_sequence(3,group_id,frame_no);
+[v3_pn_re , v3_pn_im] = pn_sequence(3,group_id,frame_no);
 
 v0 = sig_in(1,2:end);
 v1 = sig_in(2,2:end);
