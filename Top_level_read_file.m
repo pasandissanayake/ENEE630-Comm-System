@@ -1,6 +1,6 @@
 function decoded_data = Top_level_read_file(path, F0, F1)
 
-FREQ_ID=10; GROUP_ID=0x1A; FRAME_START=0;
+FREQ_ID=10; GROUP_ID=0; FRAME_START=0;
 
 block_num = 1; frame = FRAME_START;
 decoded_data = [];
