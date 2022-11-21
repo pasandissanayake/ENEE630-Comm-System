@@ -10,20 +10,16 @@ end
 
 figure;
 plot(1:length(dd),abs(dd),'r-',1:length(de),abs(de),'b--')
+title('decoded and original data - time domain');
+legend('decoded data','original data');
 
 figure;
 subplot(2,1,1);
 plot(abs(fft(dd,128))/5120,'r-');
+title('decoded data - dft');
 subplot(2,1,2);
 plot(abs(fft(de,128))/5120,'r-');
+title('original data - dft');
 
 fprintf('test MSE: %f\n',MSE(dd,de,0,0,0))
 
-
-%%
-t = 0:1/1e4:10;
-a = cos(2*pi*2e3*t);
-b = exp(1i*2*pi*234.38*t);
-c = a.* b;
-figure;
-plot(abs(fft(c,128)))
