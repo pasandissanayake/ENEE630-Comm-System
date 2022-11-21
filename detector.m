@@ -8,13 +8,13 @@ function [freq_sign, freq_offset] = detector(burst_sig)
 group_bins = [10 20 30 40 50 60 70 80 90 100 110];
 
 % Get the fft
-dft_out = abs(fft(burst_sig));
+dft_out = abs(fft(burst_sig,128));
 
 % Detect burst freq
-[max_fft, max_bin] = max(dft_out(1:64));
+[max_fft, max_bin] = max(dft_out);
 
 % Calculate freq signature and freq offset
-max_bin = max_bin -1;
+max_bin = max_bin - 1;
 dist_arr = abs(group_bins - max_bin);
 [min_dist, min_dist_idx] = min(dist_arr);
 

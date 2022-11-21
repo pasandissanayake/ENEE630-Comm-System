@@ -9,7 +9,7 @@ for k=1:5
 end
 
 figure;
-plot(1:length(dd),abs(dd),'r-',1:length(de),abs(de),'b--')
+plot(1:length(dd),abs(dd),'r-',1:length(de),abs(de),'b--');
 title('decoded and original data - time domain');
 legend('decoded data','original data');
 

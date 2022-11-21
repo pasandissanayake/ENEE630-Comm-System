@@ -10,9 +10,10 @@ F1 = H1; % F1(1,:) = -F1(1,:);
 [b,ooo] = read_file('C:\Users\pasan\Desktop\test_vectors\Rn_GroupID_1A_FreqID_10_SNR_100.000000_Foff_0.000000_Nframe_5_Nstart_0.txt',1,0);
 txi = interleaver_tx(scrambler(polyphase_tx(oin',H0,H1),26,0));
 
-figure;
-p = (txi-ooo < 1);
-stem(1:1:100,p(1:1:100),'r-')
+% figure;
+% p = (txi-ooo < 1);
+% stem(1:1:100,p(1:1:100),'r-');
 
-figure
-plot(1:length(txi),txi,'r-',1:length(ooo),ooo,'b--')
+figure;
+plot(1:length(txi),txi,'r-',1:length(ooo),ooo,'b--');
+legend('our tx','simulator tx');
