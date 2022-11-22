@@ -1,34 +1,31 @@
-function [id_sig, data_sig] = read_file(path,block_num,data_only)
-% path - file path + name
-% block_num - block number to read
-% data_only - to read Rx file put 0, to read input data file put 1
-% id_sig - group frequency id samples vector (empty if data_only = 0)
-% data_sig - data vector
-    ID_SIG_LEN = 128; DATA_SIG_LEN = 1024; I_COL = 1; Q_COL = 2;
-    
-    if data_only > 0
-        block_len = DATA_SIG_LEN + 2; % +2 is due to the two emplty lines at the end of each block
-    else
-        block_len = ID_SIG_LEN + DATA_SIG_LEN + 2;
-    end
+function decoded_data = read_file(file_path,freq_id,group_id,frame_start,dft_bins,F0,F1)
 
-    opts = detectImportOptions(path);
-    opts.DataLines = [block_len*(block_num-1)+1 block_len*block_num-2];
+    current_block = 1; current_frame = frame_start;
+    decoded_data = [];
+    n_end = 0;
+    while true
+        [id_sig,data_sig]=read_block(file_path,current_block,0);
     
-    m = readmatrix(path,opts);
+        if isempty(data_sig)
+            break
+        end
     
-    if (data_only == 0 && length(m) < ID_SIG_LEN + DATA_SIG_LEN) || (data_only > 0 && length(m) < DATA_SIG_LEN)
-        fprintf('read_file: block number %d does not contain valid data\n',block_num);
-        id_sig = [];
-        data_sig = [];
-        return
-    end
-    
-    if data_only > 0
-        id_sig = [];
-        data_sig = m(1:DATA_SIG_LEN,I_COL) + 1i*m(1:DATA_SIG_LEN,Q_COL);
-    else
-        id_sig = m(1:ID_SIG_LEN,I_COL) + 1i*m(1:ID_SIG_LEN,Q_COL);
-        data_sig = m(ID_SIG_LEN+1:ID_SIG_LEN+DATA_SIG_LEN,I_COL) + 1i*m(ID_SIG_LEN+1:ID_SIG_LEN+DATA_SIG_LEN,Q_COL);
+        [freq_sign,freq_offset]=detector(id_sig);
+        
+        if freq_sign==freq_id
+            owner = 'us';
+            n = 0:1:(length(data_sig)-1);
+            n = n' + n_end;
+            n_end = n(end) + 1;
+            freq_adjust = exp(-1i*2*pi*freq_offset*n/dft_bins);
+            raw_data = data_sig .* freq_adjust;
+            decoded_data = [decoded_data polyphase_rx(scrambler(interleaver_rx(raw_data),group_id,current_frame),F0,F1);];
+            current_frame = current_frame + 1;
+        else
+            owner = 'them';
+        end
+        fprintf('block: %2d   freq. sign: %2d   offset: %2d   owner: %4s\n',current_block,freq_sign,freq_offset,owner);
+        current_block = current_block + 1;
     end
 end
+
