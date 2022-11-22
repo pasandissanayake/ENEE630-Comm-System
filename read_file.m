@@ -4,7 +4,7 @@ function [id_sig, data_sig] = read_file(path,block_num,data_only)
 % data_only - to read Rx file put 0, to read input data file put 1
 % id_sig - group frequency id samples vector (empty if data_only = 0)
 % data_sig - data vector
-    ID_SIG_LEN = 128; DATA_SIG_LEN = 1024;
+    ID_SIG_LEN = 128; DATA_SIG_LEN = 1024; I_COL = 1; Q_COL = 2;
     
     if data_only > 0
         block_len = DATA_SIG_LEN + 2; % +2 is due to the two emplty lines at the end of each block
@@ -26,9 +26,9 @@ function [id_sig, data_sig] = read_file(path,block_num,data_only)
     
     if data_only > 0
         id_sig = [];
-        data_sig = m(1:DATA_SIG_LEN,1) + 1i*m(1:DATA_SIG_LEN,2);
+        data_sig = m(1:DATA_SIG_LEN,I_COL) + 1i*m(1:DATA_SIG_LEN,Q_COL);
     else
-        id_sig = m(1:ID_SIG_LEN,1) + 1i*m(1:ID_SIG_LEN,2);
-        data_sig = m(ID_SIG_LEN+1:ID_SIG_LEN+DATA_SIG_LEN,1) + 1i*m(ID_SIG_LEN+1:ID_SIG_LEN+DATA_SIG_LEN,2);
+        id_sig = m(1:ID_SIG_LEN,I_COL) + 1i*m(1:ID_SIG_LEN,Q_COL);
+        data_sig = m(ID_SIG_LEN+1:ID_SIG_LEN+DATA_SIG_LEN,I_COL) + 1i*m(ID_SIG_LEN+1:ID_SIG_LEN+DATA_SIG_LEN,Q_COL);
     end
 end
