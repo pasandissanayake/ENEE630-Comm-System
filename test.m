@@ -1,17 +1,12 @@
 DIRECTORY = 'C:\Users\pasan\Desktop\ENEE630_F2022_TXsim';
-FILE_SUFFIX = 'GroupID_1A_FreqID_10_SNR_10.000000_Foff_234.375000_Nframe_5_Nstart_1.txt';
+FILE_SUFFIX = 'GroupID_1A_FreqID_10_SNR_-7.000000_Foff_0.000000_Nframe_5_Nstart_1_0.txt';
 
-FREQ_ID = 10;
 GROUP_ID = 0x1A;
+FREQ_ID = 10;
 FRAME_START = 1;
 DFT_BINS = 128;
 
-global H0 H1 F0 F1
-H0 = [-1 0 3 0 -8 0 21 0 -45 0 91 0 -191 0 643 1024 643 0 -191 0 91 0 -45 0 21 0 -8 0 3 0 -1];
-H0 = [H0; [2048 zeros(1,30)]];
-H1 = H0; H1(1,16) = -1024;
-F0 = H0;
-F1 = H1; %F1(1,:) = -F1(1,:);
+[H0,H1,F0,F1] = filter_def();
 
 decoded_data = read_file(strcat(DIRECTORY,'\Rn_',FILE_SUFFIX),FREQ_ID,GROUP_ID,FRAME_START,DFT_BINS,F0,F1);
 
@@ -35,5 +30,5 @@ subplot(2,1,2);
 plot(abs(fft(original_data,128))/5120,'r-');
 title('original data - dft');
 
-fprintf('test MSE: %f\n',MSE(decoded_data,original_data,0,0,0))
+fprintf('test MSE: %.10f\n',MSE(decoded_data,original_data,0,0,0))
 

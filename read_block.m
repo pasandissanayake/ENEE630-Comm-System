@@ -18,7 +18,7 @@ function [id_sig, data_sig] = read_block(file_path,block_num,data_only)
     m = readmatrix(file_path,opts);
     
     if (data_only == 0 && length(m) < ID_SIG_LEN + DATA_SIG_LEN) || (data_only > 0 && length(m) < DATA_SIG_LEN)
-        fprintf('read_file: block number %d does not contain valid data\n',block_num);
+        fprintf('read_block: block number %d does not contain valid data\n',block_num);
         id_sig = [];
         data_sig = [];
         return

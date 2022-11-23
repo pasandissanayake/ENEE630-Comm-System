@@ -30,6 +30,7 @@ for burst_no = 1:n
         [x, x_h] = synthesis_fun(x);
     else
         x_h = synthesis_fun;
+    end
     
     % MSE calculation
     x_abs_diff_2 = abs(x-x_h).^2;
