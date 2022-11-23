@@ -1,5 +1,5 @@
 DIRECTORY = 'C:\Users\pasan\Desktop\ENEE630_F2022_TXsim';
-FILE_SUFFIX = 'GroupID_1A_FreqID_10_SNR_-7.000000_Foff_0.000000_Nframe_5_Nstart_1_0.txt';
+FILE_SUFFIX = 'GroupID_1A_FreqID_10_SNR_-5.000000_Foff_0.000000_Nframe_5_Nstart_1.txt';
 
 GROUP_ID = 0x1A;
 FREQ_ID = 10;

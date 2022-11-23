@@ -5,14 +5,14 @@ function decoded_data = read_file(file_path,freq_id,group_id,frame_start,dft_bin
     n_end = 0;
     while true
         [id_sig,data_sig]=read_block(file_path,current_block,0);
-
+        id_sig = id_sig - mean(id_sig);
         data_sig = data_sig - mean(data_sig);
             
         if isempty(data_sig)
             break
         end
     
-        [freq_sign,freq_offset]=detector(id_sig);
+        [freq_sign,freq_offset]=detector(id_sig,1);
         
         if freq_sign==freq_id
             owner = 'us';
