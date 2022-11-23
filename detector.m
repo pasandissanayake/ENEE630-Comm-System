@@ -1,6 +1,6 @@
 function [freq_sign, freq_offset] = detector(burst_sig, fix_any)
 % INPUT :   burst_sig (complex)   - burst signal in the begining of the frame 
-%           fix_any (0/1)         - fix any frequency offset
+%           fix_any (0/1)         - fix any frequency offset (1 to fix any)
 % OUTPUTS:
 %       freq_sign               - group freq signature
 %       freq_offset             - (group freq signature -
