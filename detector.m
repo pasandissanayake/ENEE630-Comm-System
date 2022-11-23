@@ -37,7 +37,7 @@ freq_sign = group_bins(min_dist_idx);
 
 if fix_any == 1
 %     true_freq = (max_bin + delta);
-    true_freq = fudge(ya,yb,yd,ye,max_bin);
+    true_freq = interp(ya,yb,yd,ye,max_bin);
     freq_offset = true_freq - freq_sign;
 else
     freq_offset = max_bin - freq_sign;
