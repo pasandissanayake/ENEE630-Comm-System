@@ -1,12 +1,12 @@
-DIRECTORY = 'C:\Users\pasan\Desktop\ENEE630_F2022_TXsim';
-FILE_SUFFIX = 'GroupID_1A_FreqID_10_SNR_-7.000000_Foff_0.000000_Nframe_5_Nstart_1_0.txt';
+DIRECTORY = 'D:\UMD\Academics\Fall 22\ENEE 630 - ADSP\Project\simulator';
+FILE_SUFFIX = 'GroupID_1A_FreqID_10_SNR_100.000000_Foff_0.000000_Nframe_1_Nstart_1.txt';
 
 GROUP_ID = 0x1A;
 
 [H0,H1,F0,F1] = filter_def();
 
 oin = []; ooo = []; bbb = [];
-for k=1:5
+for k=1:1
     [~,a] = read_block(strcat(DIRECTORY,'\Rn_',FILE_SUFFIX),k,0);
     ooo = [ooo; a];
     bbb = [bbb; a-mean(a)];

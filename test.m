@@ -6,9 +6,11 @@ FREQ_ID = 10;
 FRAME_START = 1;
 DFT_BINS = 128;
 
+SNR = -10;
+
 [H0,H1,F0,F1] = filter_def();
 
-decoded_data = read_file(strcat(DIRECTORY,'\Rn_',FILE_SUFFIX),FREQ_ID,GROUP_ID,FRAME_START,DFT_BINS,F0,F1);
+decoded_data = read_file(strcat(DIRECTORY,'\Rn_',FILE_SUFFIX),FREQ_ID,GROUP_ID,FRAME_START,DFT_BINS,F0,F1,SNR);
 
 original_data = [];
 for k=1:length(decoded_data)/1024
@@ -30,5 +32,5 @@ subplot(2,1,2);
 plot(abs(fft(original_data,128))/5120,'r-');
 title('original data - dft');
 
-fprintf('test MSE: %.10f\n',MSE(decoded_data(60:end-60),original_data(60:end-60),0,0,0))
+fprintf('test MSE: %.10f\n',MSE(decoded_data(15:end-15),original_data(15:end-15),0,0,0))
 
