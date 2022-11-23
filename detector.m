@@ -9,19 +9,23 @@ function [freq_sign, freq_offset] = detector(burst_sig, fix_any)
 group_bins = [10 20 30 40 50 60 70 80 90 100 110];
 
 % Get the fft
-dft_out = abs(fft(burst_sig,128));
+dft_out = abs(fft(burst_sig,128))./128;
 
 % Detect burst freq
 [max_fft, max_bin] = max(dft_out);
-
+fprintf('max bin: %f\n', max_bin-1);
 % Compensate for any freq offset
-if fix_any == 1
-    max_fft_m1 = dft_out(max_bin-1);
-    max_fft_p1 = dft_out(max_bin+1);
-    denom = max_fft_m1+max_fft_p1-2*max_fft;
-    if denom~=0
-        delta = (max_fft_m1 - max_fft_p1)/(max_fft_m1+max_fft_p1-2*max_fft);
-    end
+ if fix_any == 1
+     ya = dft_out(max_bin-2);
+     yb = dft_out(max_bin-1);
+     yd = dft_out(max_bin+1);
+     ye = dft_out(max_bin+2);
+%     max_fft_m1 = dft_out(max_bin-1)^0.5;
+%     max_fft_p1 = dft_out(max_bin+1)^0.5;
+%     denom = 2*(max_fft_m1+max_fft_p1-2*(max_fft)^0.5);
+%     if denom~=0
+%         delta = (max_fft_m1 - max_fft_p1)/denom;
+%     end
 end
 
 % Calculate freq signature and freq offset
@@ -32,7 +36,8 @@ dist_arr = abs(group_bins - max_bin);
 freq_sign = group_bins(min_dist_idx);
 
 if fix_any == 1
-    true_freq = (max_bin + delta);
+%     true_freq = (max_bin + delta);
+    true_freq = fudge(ya,yb,yd,ye,max_bin);
     freq_offset = true_freq - freq_sign;
 else
     freq_offset = max_bin - freq_sign;

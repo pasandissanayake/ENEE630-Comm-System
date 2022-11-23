@@ -20,7 +20,7 @@ for burst_no = 1:n
         x =1*cos(w*t/T) + 0*1.5*cos(10*w*t/T);
     elseif isscalar(in_sig)
         % random input
-        x = randn(1,sig_len,"like",1i);
+        x = randn(1,sig_len,"like",1i) * 2^15;
     else
         x = in_sig;
     end

@@ -1,5 +1,5 @@
-DIRECTORY = 'C:\Users\pasan\Desktop\ENEE630_F2022_TXsim';
-FILE_SUFFIX = 'GroupID_1A_FreqID_10_SNR_-5.000000_Foff_0.000000_Nframe_5_Nstart_1.txt';
+DIRECTORY = 'D:\UMD\Academics\Fall 22\ENEE 630 - ADSP\Project\simulator';
+FILE_SUFFIX = 'GroupID_1A_FreqID_10_SNR_100.000000_Foff_0.000000_Nframe_1_Nstart_1.txt';
 
 GROUP_ID = 0x1A;
 FREQ_ID = 10;
@@ -30,5 +30,5 @@ subplot(2,1,2);
 plot(abs(fft(original_data,128))/5120,'r-');
 title('original data - dft');
 
-fprintf('test MSE: %.10f\n',MSE(decoded_data,original_data,0,0,0))
+fprintf('test MSE: %.10f\n',MSE(decoded_data(60:end-60),original_data(60:end-60),0,0,0))
 

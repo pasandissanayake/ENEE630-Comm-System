@@ -6,7 +6,7 @@ function decoded_data = read_file(file_path,freq_id,group_id,frame_start,dft_bin
     while true
         [id_sig,data_sig]=read_block(file_path,current_block,0);
         id_sig = id_sig - mean(id_sig);
-        data_sig = data_sig - mean(data_sig);
+%         data_sig = data_sig - mean(data_sig);
             
         if isempty(data_sig)
             break
