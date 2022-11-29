@@ -59,5 +59,5 @@ for i = 1:frame_size
     im_key = [im_key(2:end) im_pn_bit];
 end
 
-
+out_pn_im = -out_pn_im; % negating to match simulator
 end
