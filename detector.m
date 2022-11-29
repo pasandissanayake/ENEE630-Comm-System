@@ -13,7 +13,7 @@ dft_out = abs(fft(burst_sig,128))./128;
 
 % Detect burst freq
 [max_fft, max_bin] = max(dft_out);
-fprintf('max bin: %f\n', max_bin-1);
+
 % Compensate for any freq offset
  if fix_any == 1
      ya = dft_out(max_bin-2);
