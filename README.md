@@ -1,6 +1,7 @@
 # ENEE630-Comm-System
 
 ## Instructions:
+  To execute the receiver on a simulator-generated received file, 
   1. Open "main.m" on MATLAB editor
   2. Set RECEIVED_DATA_FILE to the simulator-generated received file path + name (eg: C:\commsys\Rn_GroupID.....txt).
   3. Set DECODED_DATA_FILE to a preferred filename (decoded signal will be written into this file. eg: C:\commsys\decoded_data.txt).
