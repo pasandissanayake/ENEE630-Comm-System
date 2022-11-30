@@ -1,4 +1,5 @@
 function write_file(file_path,data)
+    data = data';
     fileID = fopen(file_path,'wt');
     fprintf('write_file: writing to %s\n',file_path);
     for i=1:length(data)

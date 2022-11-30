@@ -1,4 +1,8 @@
 function out=interleaver_rx(sig_in)
+% INPUTS :    sig_in - Mx1 array containing the serialized, interleaved data
+% 
+% OUTPUTS:    out - 4x(N+1) complex array containing samples from each channel
+
 deinterleaver_order=[1,4,2,4,3,4,3,4];
 
 

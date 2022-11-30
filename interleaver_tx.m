@@ -1,4 +1,8 @@
 function out=interleaver_tx(sig_in)
+% INPUTS :    sig_in - 4x(N+1) complex array containing samples from each channel
+% 
+% OUTPUTS:    out - Mx1 array containing the serialized, interleaved data
+
 interleaver_order=[1,4,2,4,3,4,3,4];
 
 V0_size=sig_in(1,1);

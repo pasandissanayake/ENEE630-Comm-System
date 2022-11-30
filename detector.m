@@ -1,6 +1,6 @@
 function [freq_sign, freq_offset] = detector(burst_sig, fix_any)
-% INPUT :   burst_sig (complex)   - burst signal in the begining of the frame 
-%           fix_any (0/1)         - fix any frequency offset (1 to fix any)
+% INPUTS :   burst_sig (complex)   - burst signal in the begining of the frame 
+%            fix_any (0/1)         - fix any frequency offset (1 to fix any)
 % OUTPUTS:
 %       freq_sign               - group freq signature
 %       freq_offset             - (group freq signature -
@@ -16,16 +16,16 @@ dft_out = abs(fft(burst_sig,128))./128;
 
 % Compensate for any freq offset
  if fix_any == 1
-     ya = dft_out(max_bin-2);
-     yb = dft_out(max_bin-1);
-     yd = dft_out(max_bin+1);
-     ye = dft_out(max_bin+2);
-%     max_fft_m1 = dft_out(max_bin-1)^0.5;
-%     max_fft_p1 = dft_out(max_bin+1)^0.5;
-%     denom = 2*(max_fft_m1+max_fft_p1-2*(max_fft)^0.5);
-%     if denom~=0
-%         delta = (max_fft_m1 - max_fft_p1)/denom;
-%     end
+%      ya = dft_out(max_bin-2);
+%      yb = dft_out(max_bin-1);
+%      yd = dft_out(max_bin+1);
+%      ye = dft_out(max_bin+2);
+    max_fft_m1 = dft_out(max_bin-1)^0.5;
+    max_fft_p1 = dft_out(max_bin+1)^0.5;
+    denom = 2*(max_fft_m1+max_fft_p1-2*(max_fft)^0.5);
+    if denom~=0
+        delta = (max_fft_m1 - max_fft_p1)/denom;
+    end
 end
 
 % Calculate freq signature and freq offset
@@ -36,8 +36,8 @@ dist_arr = abs(group_bins - max_bin);
 freq_sign = group_bins(min_dist_idx);
 
 if fix_any == 1
-%     true_freq = (max_bin + delta);
-    true_freq = interp(ya,yb,yd,ye,max_bin);
+    true_freq = (max_bin + delta);
+%     true_freq = interp(ya,yb,yd,ye,max_bin);
     freq_offset = true_freq - freq_sign;
 else
     freq_offset = max_bin - freq_sign;

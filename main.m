@@ -1,10 +1,10 @@
 %%%%%%%%%%%%%% parameters %%%%%%%%%%%%%%%%%%
 
 % Rn file path + name
-RECEIVED_DATA_FILE = 'C:\Users\pasan\Desktop\ENEE630_F2022_TXsim\Rn_GroupID_1A_FreqID_10_SNR_-5.000000_Foff_0.000000_Nframe_5_Nstart_1.txt';
+RECEIVED_DATA_FILE = 'C:\Users\pasan\Desktop\ENEE630_F2022_TXsim\Rn_GroupID_1A_FreqID_10_SNR_100.000000_Foff_156.250000_Nframe_5_Nstart_1.txt';
 
 % output file path + name (to save decoded data)
-DECODED_DATA_FILE = 'C:\Users\pasan\Desktop\ENEE630_F2022_TXsim\decoded_data.txt';
+DECODED_DATA_FILE = 'C:\Users\pasan\Desktop\ENEE630_F2022_TXsim\decoded_data156Hz.txt';
 
 GROUP_ID = 0x1A;    % group id
 FREQ_ID = 10;       % frequency id
