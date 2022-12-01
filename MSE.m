@@ -1,13 +1,17 @@
 function out = MSE(synthesis_fun,in_sig,show_plot,n,sig_len)
-% output: Mean square error (MSE) averaged over 'n' bursts (each of size sig_len)
+% output: Mean square error (MSE)
 % inputs: 
-%   n       - number of bursts
-%   sig_len - size of each burst
+%   synthesis_fun - a function handle which outputs [original signal,
+%   decoded signal] by taking original signal as the input
+%   in_sig - original signal either a Mx1 array of samples or 1 (for sin) or 0 (for random)
+%   show_plot - 1 (to show a plot) or 0 (not to show plot)
+%   n - if in_sig=1 or 0, the number of bursts
+%   sig_len = if in_sig=1 or 0, the length of the original signal
 
-%% Calculating avg. MSE over 'n' bursts
 
 MSE_burst_sum = 0;
 
+% if in_sig is a vector, consider it as the original signal
 if ~isscalar(in_sig)
     n = 1;
 end
@@ -36,6 +40,7 @@ for burst_no = 1:n
     x_abs_diff_2 = abs(x-x_h).^2;
     x_2 = abs(x).^2;
 
+    % neglect error for very small denominators
     idx=(x_2 < 1e-5);
     x_2(idx) = 1e-5;
     x_abs_diff_2(idx) = 0;
